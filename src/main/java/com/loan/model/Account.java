@@ -10,12 +10,12 @@ public class Account {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
-	protected String name;
-	protected String surname;
-	protected String personalCode;
-	protected double value;
-	protected int monthsToPayForLoan;
-	protected String content;
+	private String name;
+	private String surname;
+	private String personalCode;
+	private double value;
+	private int monthsToPayForLoan;
+	private String content;
 
 	public Account(long id, String name, String surname, String personalCode, String content, double value, int monthsToPayForLoan) {
 		super();

@@ -18,7 +18,7 @@ public class AccountController {
 
 	@RequestMapping(value = "loan", method = RequestMethod.POST)
 	public ResponseEntity<Void> accountInformation(@RequestBody LoanForm loanForm) {
-		Account account = new Account(loanForm.getName(), loanForm.getLastName(), loanForm.getloanAmount(), loanForm.getMonths());
+		Account account = new Account(loanForm.getName(), loanForm.getLastName(), loanForm.getLoanAmount(), loanForm.getMonths());
 		accountService.save(account);
 		return ResponseEntity.accepted().build();
 	}

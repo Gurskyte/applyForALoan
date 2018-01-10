@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.math.BigDecimal;
+import java.util.Date;
 
 @Entity
 public class Account {
@@ -15,6 +16,9 @@ public class Account {
     private String lastName;
     private BigDecimal loanAmount;
     private int months;
+    private Date date;
+    private boolean giveLoanOrNot;
+
 
     public Account() {
         super();
@@ -25,6 +29,14 @@ public class Account {
         this.lastName = lastName;
         this.loanAmount = loanAmount;
         this.months = months;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public String getName() {
@@ -43,10 +55,14 @@ public class Account {
         this.lastName = lastName;
     }
 
-
+/*
     public long getId() {
         return id;
     }
+
+    public void setId() {
+       this.id = id;
+    }*/
 
     public BigDecimal getloanAmount() {
         return loanAmount;
@@ -63,6 +79,12 @@ public class Account {
     public void setMonths(int months) {
         this.months = months;
     }
+    public boolean isGiveLoanOrNot() {
+        return giveLoanOrNot;
+    }
 
+    public void setGiveLoanOrNot(boolean giveLoanOrNot) {
+        this.giveLoanOrNot = giveLoanOrNot;
+    }
 
 }

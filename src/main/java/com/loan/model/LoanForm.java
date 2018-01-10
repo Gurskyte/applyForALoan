@@ -1,14 +1,20 @@
 package com.loan.model;
 
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.NotEmpty;
 
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
+import java.util.Date;
 
 public class LoanForm {
     @NotBlank
+    @Size(min = 3, max = 15)
+    /////////size neveikia
     private String name;
+    @NotBlank
     private String lastName;
+    @Digits(integer = 6, fraction = 0)
     private BigDecimal loanAmount;
     private int months;
 
@@ -36,7 +42,7 @@ public class LoanForm {
         this.name = name;
     }
 
-    public BigDecimal getloanAmount() {
+    public BigDecimal getLoanAmount() {
         return loanAmount;
     }
 

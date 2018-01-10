@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.math.BigDecimal;
+import java.sql.Time;
 import java.util.Date;
 
 @Entity
@@ -16,8 +17,11 @@ public class Account {
     private String lastName;
     private BigDecimal loanAmount;
     private int months;
-    private Date date;
+    //private Time timeWhenAskedForALoan;
     private boolean giveLoanOrNot;
+
+    //Risk.isRiskyTime();
+
 
 
     public Account() {
@@ -29,15 +33,16 @@ public class Account {
         this.lastName = lastName;
         this.loanAmount = loanAmount;
         this.months = months;
+       // this.timeWhenAskedForALoan = new Time();
+    }
+/*
+    public Date getTimeWhenAskedForALoan() {
+        return timeWhenAskedForALoan;
     }
 
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
+    public void setTimeWhenAskedForALoan(Time timeWhenAskedForALoan) {
+        this.timeWhenAskedForALoan = timeWhenAskedForALoan;
+    }*/
 
     public String getName() {
         return name;

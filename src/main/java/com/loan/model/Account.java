@@ -1,12 +1,13 @@
 package com.loan.model;
 
+import com.loan.service.Loan;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.math.BigDecimal;
-import java.sql.Time;
-import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Account {
@@ -17,6 +18,16 @@ public class Account {
     private String lastName;
     private BigDecimal loanAmount;
     private int months;
+
+    private List<Loan> loans;
+
+
+
+
+
+
+
+
     //private Time timeWhenAskedForALoan;
     private boolean giveLoanOrNot;
 
@@ -29,10 +40,12 @@ public class Account {
     }
 
     public Account(String name, String lastName, BigDecimal loanAmount, int months) {
+        this.id = id;
         this.name = name;
         this.lastName = lastName;
         this.loanAmount = loanAmount;
         this.months = months;
+        this.giveLoanOrNot = Risk.isRiskyTime();
        // this.timeWhenAskedForALoan = new Time();
     }
 /*
@@ -60,14 +73,14 @@ public class Account {
         this.lastName = lastName;
     }
 
-/*
-    public long getId() {
+
+    public Long getId() {
         return id;
     }
 
-    public void setId() {
+    public void setId(Long id) {
        this.id = id;
-    }*/
+    }
 
     public BigDecimal getloanAmount() {
         return loanAmount;
@@ -92,4 +105,11 @@ public class Account {
         this.giveLoanOrNot = giveLoanOrNot;
     }
 
+    public List<Loan> getLoans() {
+        return loans;
+    }
+
+    public void setLoans(List<Loan> loans) {
+        this.loans = loans;
+    }
 }

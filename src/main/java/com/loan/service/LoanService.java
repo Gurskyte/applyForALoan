@@ -10,15 +10,11 @@ import com.loan.repository.AccountRepository;
 public class LoanService {
     @Autowired
     AccountRepository accountRepository;
+    AccountService accountService;
 
 
     public void issue(LoanForm loanForm) {
-        //sukurti servisa accservice.findorcreate
-        Account account = accountRepository.findFirstByName(loanForm.getName());
-        if (account == null) {
-            account = new Account(loanForm.getName(), loanForm.getLastName(), loanForm.getLoanAmount(), loanForm.getMonths());
-        }
-        //
+        Account account = accountService.findOrCreate(loanForm);
 
         if(isLoanValid(account, loanForm)) {
             Loan loan = new Loan(loanForm.getLoanAmount(), loanForm.getMonths());

@@ -14,11 +14,12 @@ public class LoanService {
 
 
     public void issue(LoanForm loanForm) {
-        Account account = accountService.findOrCreate(loanForm);
+       Account account = accountService.findOrCreate(loanForm);
+
 
         if(isLoanValid(account, loanForm)) {
             Loan loan = new Loan(loanForm.getLoanAmount(), loanForm.getMonths());
-            account.getLoans().add(loan);
+           // account.getLoans().add(loan);
             accountRepository.save(account);
         }
 

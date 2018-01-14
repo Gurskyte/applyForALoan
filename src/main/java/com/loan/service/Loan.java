@@ -2,19 +2,18 @@ package com.loan.service;
 
 import com.loan.model.Account;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.math.BigDecimal;
 
-/**
- * Created by Ugne on 2018.01.11.
- */
 @Entity
 public class Loan {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;//nzn ar reik
     private BigDecimal loanAmount;
     private int months;
-    @OneToMany
-    private Account account;
+    //@OneToMany
+ //   private Account account;
 
     public Loan(BigDecimal loanAmount, int months) {
         this.loanAmount = loanAmount;

@@ -19,7 +19,7 @@ public class Account {
     private BigDecimal loanAmount;
     private int months;
 
-    private List<Loan> loans;
+   // private List<Loan> loans;
 
 
 
@@ -105,6 +105,7 @@ public class Account {
         this.giveLoanOrNot = giveLoanOrNot;
     }
 
+/*
     public List<Loan> getLoans() {
         return loans;
     }
@@ -112,4 +113,6 @@ public class Account {
     public void setLoans(List<Loan> loans) {
         this.loans = loans;
     }
+    */
 }
+

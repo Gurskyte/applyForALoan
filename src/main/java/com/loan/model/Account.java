@@ -2,24 +2,27 @@ package com.loan.model;
 
 import com.loan.service.Loan;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
+@Table(name = "accounts", catalog = "test")
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "account_id")
     private Long id;
     private String name;
+    @Column(name = "account_name")
     private String lastName;
+    @Column(name = "account_lastName")
     private BigDecimal loanAmount;
     private int months;
 
-   // private List<Loan> loans;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "account_id", referencedColumnName = "account_id")
+    private List<Loan> loans;
 
 
 
@@ -56,6 +59,7 @@ public class Account {
     public void setTimeWhenAskedForALoan(Time timeWhenAskedForALoan) {
         this.timeWhenAskedForALoan = timeWhenAskedForALoan;
     }*/
+
 
     public String getName() {
         return name;
@@ -105,7 +109,7 @@ public class Account {
         this.giveLoanOrNot = giveLoanOrNot;
     }
 
-/*
+
     public List<Loan> getLoans() {
         return loans;
     }
@@ -113,6 +117,6 @@ public class Account {
     public void setLoans(List<Loan> loans) {
         this.loans = loans;
     }
-    */
+
 }
 

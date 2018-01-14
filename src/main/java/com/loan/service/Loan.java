@@ -6,14 +6,22 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
+@Table(name = "accounts", catalog = "test")
 public class Loan {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;//nzn ar reik
+    @Column(name = "loan_id")
+    private Long id;
     private BigDecimal loanAmount;
     private int months;
-    //@OneToMany
- //   private Account account;
+
+
+
+    private Long account_id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    //@JoinColumn(name = "account_id")
+    private Account account;
 
     public Loan(BigDecimal loanAmount, int months) {
         this.loanAmount = loanAmount;
@@ -34,5 +42,12 @@ public class Loan {
 
     public void setMonths(int months) {
         this.months = months;
+    }
+    public Long getAccount_id() {
+        return account_id;
+    }
+
+    public void setAccount_id(Long account_id) {
+        this.account_id = account_id;
     }
 }

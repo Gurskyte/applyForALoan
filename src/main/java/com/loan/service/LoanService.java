@@ -1,33 +1,35 @@
 package com.loan.service;
 
 import com.loan.model.Account;
+import com.loan.model.Loan;
 import com.loan.model.LoanForm;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import com.loan.repository.AccountRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class LoanService {
+    private AccountRepository accountRepository;
+    private AccountService accountService;
+
     @Autowired
-    AccountRepository accountRepository;
-    AccountService accountService;
+    public LoanService(AccountRepository accountRepository, AccountService accountService) {
+        this.accountRepository = accountRepository;
+        this.accountService = accountService;
+    }
 
 
     public void issue(LoanForm loanForm) {
-       Account account = accountService.findOrCreate(loanForm);
-
-
-        if(isLoanValid(account, loanForm)) {
-            Loan loan = new Loan(loanForm.getLoanAmount(), loanForm.getMonths());
-           // account.getLoans().add(loan);
+        Account account = accountService.findOrCreate(loanForm);
+        if (isLoanValid(account, loanForm) == true) {
+            account.addLoan(new Loan(loanForm.getLoanAmount(), loanForm.getMonths()));
+            //cia nereikia saugoti, perdarytio, kad kreiptusi i accService ir ten saugotu.
             accountRepository.save(account);
         }
-
-        accountRepository.save(account);
     }
 
     private boolean isLoanValid(Account account, LoanForm loan) {
-        return false;
+        return true;
     }
 
     public Account findAccount(String name) {

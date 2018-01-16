@@ -10,11 +10,8 @@ import com.loan.model.LoanForm;
 @RestController
 @RequestMapping(value="/")
 public class AccountController {
-
-
 	@Autowired
 	private LoanService loanService;
-
 
 	@RequestMapping(value = "loan", method = RequestMethod.POST)
 	public ResponseEntity<Void> accountInformation(@RequestBody LoanForm loanForm) {

@@ -4,17 +4,21 @@ import com.loan.model.Account;
 import com.loan.model.LoanForm;
 import com.loan.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class AccountService {
-    @Autowired
-    AccountRepository accountRepository;
+    private AccountRepository accountRepository;
 
-      public Account findOrCreate(LoanForm loanForm) {
+    @Autowired
+    public AccountService(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
+    }
+
+    public Account findOrCreate(LoanForm loanForm) {
         Account account = accountRepository.findFirstByName(loanForm.getName());
         if (account == null) {
-            account = new Account(loanForm.getName(), loanForm.getLastName(), loanForm.getLoanAmount(), loanForm.getMonths());
+            account = accountRepository.save(new Account(loanForm.getName(), loanForm.getLastName()));
         }
         return account;
     }

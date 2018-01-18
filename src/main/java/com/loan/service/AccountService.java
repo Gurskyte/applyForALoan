@@ -22,4 +22,7 @@ public class AccountService {
         }
         return account;
     }
+    public void saveAccount(Account account){
+        accountRepository.save(account);
+    }
 }

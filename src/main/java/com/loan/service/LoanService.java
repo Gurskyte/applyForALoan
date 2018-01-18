@@ -7,6 +7,8 @@ import com.loan.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+
 @Service
 public class LoanService {
     private AccountRepository accountRepository;
@@ -21,15 +23,32 @@ public class LoanService {
 
     public void issue(LoanForm loanForm) {
         Account account = accountService.findOrCreate(loanForm);
-        if (isLoanValid(account, loanForm) == true) {
+        if (isValid(account, loanForm) == true) {
             account.addLoan(new Loan(loanForm.getLoanAmount(), loanForm.getMonths()));
-            //cia nereikia saugoti, perdarytio, kad kreiptusi i accService ir ten saugotu.
-            accountRepository.save(account);
+            accountService.saveAccount(account);
         }
     }
 
-    private boolean isLoanValid(Account account, LoanForm loan) {
-        return true;
+    private boolean isValid(Account account, LoanForm loan) {
+       // while ((isAccountValid(account) && isLoanValid(loan)) == true) {
+            return true;
+       // }
+       // return false;
+    }
+
+    private boolean isLoanValid(LoanForm loan) {
+        //pagalvot kaip validuot
+        while (loan.getLoanAmount().scale() == 0) {
+            return true;
+        }
+        return false;
+    }
+    private boolean isAccountValid(Account account) {
+        while(account.getName().matches("[a-zA-Z ]") &&
+        account.getLastName().matches("[a-zA-Z][ '-.]") == true){
+            return true;
+        }
+        return false;
     }
 
     public Account findAccount(String name) {

@@ -2,8 +2,7 @@ package com.loan.model;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.sql.Timestamp;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 
 @Entity
@@ -19,17 +18,16 @@ public class Loan {
     private int months;
     @Column(name = "ip")
     private String ip;
-
-   // Timestamp timeNow = new Timestamp(new Date().getTime());
+    LocalDateTime issueDate;
 
     public Loan() {
     }
 
-    public Loan(BigDecimal loanAmount, int months, String ip) {
+    public Loan(BigDecimal loanAmount, int months, String clientIp) {
         this.loanAmount = loanAmount;
         this.months = months;
-        this.ip = ip;
-
+        this.ip = clientIp;
+        this.issueDate = LocalDateTime.now();
     }
 
 
@@ -65,11 +63,11 @@ public class Loan {
         this.ip = ip;
     }
 
-   /* public Timestamp getTimeNow() {
-        return timeNow;
+    public LocalDateTime getIssueDate() {
+        return issueDate;
     }
 
-    public void setTimeNow(Timestamp timeNow) {
-        this.timeNow = timeNow;
-    }*/
+    public void setIssueDate(LocalDateTime issueDate) {
+        this.issueDate = issueDate;
+    }
 }

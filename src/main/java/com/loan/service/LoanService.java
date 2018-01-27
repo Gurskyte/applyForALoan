@@ -12,7 +12,6 @@ import java.math.BigDecimal;
 
 @Service
 public class LoanService {
-    //private Loan loan;
     private AccountRepository accountRepository;
     private AccountService accountService;
     private WebUtils webUtils;

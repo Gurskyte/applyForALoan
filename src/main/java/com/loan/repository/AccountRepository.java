@@ -8,4 +8,5 @@ import com.loan.model.Account;
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Long> {
     Account findFirstByName(String name);
+    //Account findAllWithSameIp();
 }

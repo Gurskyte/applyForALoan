@@ -4,13 +4,12 @@ import com.loan.model.Account;
 import com.loan.model.LoanForm;
 import com.loan.model.WebUtils;
 import com.loan.repository.AccountRepository;
+import com.loan.repository.LoanRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-
-import javax.servlet.http.HttpServletRequest;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
@@ -27,10 +26,12 @@ public class LoanServiceTest {
     private AccountService accountService;
     @Mock
     private WebUtils webUtils;
+    @Mock
+    private LoanRepository loanRepository;
 
     @Before
     public void setUp() {
-        loanService = new LoanService(accountRepository, accountService, webUtils);
+        loanService = new LoanService(accountRepository, accountService, webUtils, loanRepository);
     }
 
     @Test

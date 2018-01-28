@@ -1,61 +1,54 @@
 package com.loan.service;
 
-import com.loan.model.Account;
-import com.loan.model.Loan;
-import com.loan.model.LoanForm;
-import com.loan.model.WebUtils;
+import com.loan.model.*;
 import com.loan.repository.AccountRepository;
+import com.loan.repository.LoanRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
-public class LoanService {
+public class LoanService{
     private AccountRepository accountRepository;
     private AccountService accountService;
     private WebUtils webUtils;
+    private LoanRepository loanRepository;
+
 
     @Autowired
-    public LoanService(AccountRepository accountRepository, AccountService accountService, WebUtils webUtils) {
+    LoanService(AccountRepository accountRepository, AccountService accountService, WebUtils webUtils, LoanRepository loanRepository) {
         this.accountRepository = accountRepository;
         this.accountService = accountService;
         this.webUtils = webUtils;
+        this.loanRepository = loanRepository;
     }
 
 
     public void issue(LoanForm loanForm) {
-        Account account = accountService.findOrCreate(loanForm);
-        if (isValid(account, loanForm)) {
+        if (isValid()) {
+            Account account = accountService.findOrCreate(loanForm);
             account.addLoan(new Loan(loanForm.getLoanAmount(), loanForm.getMonths(), webUtils.getClientIp()));
             accountService.saveAccount(account);
         }
     }
 
-    private boolean isValid(Account account, LoanForm loan) {
-       // while ((isAccountValid(account) && isLoanValid(loan)) == true) {
-            return true;
-       // }
-       // return false;
-    }
-
-    private boolean isLoanValid(LoanForm loan) {
-        //pagalvot kaip validuot
-        while (loan.getLoanAmount().scale() == 0) {
+    private boolean isValid(){
+        LocalDateTime nowMinusDay = LocalDateTime.now().minusSeconds(5);
+        String clientIp = webUtils.getClientIp();
+        int loanCount = loanRepository.countByIpBeforeDate(clientIp, nowMinusDay);
+        if(loanCount < 3) {
             return true;
         }
-        return false;
-    }
-
-    private boolean isAccountValid(Account account) {
-        while(account.getName().matches("[a-zA-Z ]") &&
-        account.getLastName().matches("[a-zA-Z][ '-.]") == true){
-            return true;
-        }
-        return false;
+        throw new LoanNotValidException("Loan was took more than 3 times per 24 hours");
     }
 
     public Account findAccount(String name) {
         return accountRepository.findFirstByName(name);
+    }
+
+    public List<Loan> findAllLoans() {
+        return loanRepository.findAll();
     }
 }

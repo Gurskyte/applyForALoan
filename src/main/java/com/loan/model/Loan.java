@@ -12,7 +12,7 @@ public class Loan {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "loan_id")
     private Long id;
-    @Column(name = "account_lastName")
+    @Column(name = "loan_amount")
     private BigDecimal loanAmount;
     @Column(name = "months")
     private int months;
@@ -70,4 +70,6 @@ public class Loan {
     public void setIssueDate(LocalDateTime issueDate) {
         this.issueDate = issueDate;
     }
+
+
 }

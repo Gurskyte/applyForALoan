@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -38,10 +39,20 @@ public class LoanService{
         LocalDateTime nowMinusDay = LocalDateTime.now().minusSeconds(5);
         String clientIp = webUtils.getClientIp();
         int loanCount = loanRepository.countByIpBeforeDate(clientIp, nowMinusDay);
-        if(loanCount < 3) {
+        if(loanCount < 3 && isLoanTimeValid()) {
             return true;
         }
-        throw new LoanNotValidException("Loan was took more than 3 times per 24 hours");
+        throw new LoanNotValidException("Loan was took more than 3 times per 24 hours from one Ip or time is too risky");
+    }
+
+    private boolean isLoanTimeValid() {
+        LocalTime timeNow = LocalTime.now();
+        LocalTime riskyTimeBegins = LocalTime.parse("00:00:00");
+        LocalTime riskyTimeENds = LocalTime.parse("06:00:00");
+        if (timeNow.isBefore(riskyTimeBegins) || timeNow.isAfter(riskyTimeENds)) {
+            return true;
+        }
+        return false;
     }
 
     public Account findAccount(String name) {

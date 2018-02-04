@@ -1,5 +1,7 @@
 package com.loan.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,9 +10,9 @@ import java.util.List;
 //@Table(name = "accounts", catalog = "test")
 public class Account {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "account_id")
-    private Long id;
+//    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "personal_number")
+    private Long personalNumber;
 
     private String name;
 
@@ -18,24 +20,25 @@ public class Account {
     private String lastName;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "account_id", referencedColumnName = "account_id")
-    private List<Loan> loans = new ArrayList<Loan>();
+    @JoinColumn(name = "personal_number", referencedColumnName = "personal_number")
+    private List<Loan> loans = new ArrayList<>();
 
     public Account() {
         super();
     }
 
-    public Account(String name, String lastName) {
+    public Account(Long personalNumber, String name, String lastName) {
+        this.personalNumber = personalNumber;
         this.name = name;
         this.lastName = lastName;
     }
 
-    public Long getId() {
-        return id;
+    public Long getPersonalNumber() {
+        return personalNumber;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setPersonalNumber(Long personalNumber) {
+        this.personalNumber = personalNumber;
     }
 
     public String getName() {

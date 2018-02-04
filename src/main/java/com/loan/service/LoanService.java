@@ -62,4 +62,16 @@ public class LoanService{
     public List<Loan> findAllLoans() {
         return loanRepository.findAll();
     }
+
+
+    public List<Loan> findAllAccountLoans(Long personalNumber) {
+        Account account = accountRepository.findOne(personalNumber);
+        if(account != null) {
+            return account.getLoans();
+        }
+        throw new ResourceNotFoundException("There's no account with provided personal number.");
+    }
+
+
+
 }

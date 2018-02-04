@@ -9,7 +9,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.loan.model.LoanForm;
 
+import javax.validation.Valid;
 import java.util.List;
+
+import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
 @RequestMapping(value="/")
@@ -19,7 +23,7 @@ public class AccountController {
 
 	@RequestMapping(value = "loan", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.ACCEPTED)
-	public String accountInformation(@RequestBody LoanForm loanForm) {
+	public String accountInformation(@Valid @RequestBody LoanForm loanForm) {
 		loanService.issue(loanForm);
 		return "Success";
 	}
@@ -34,5 +38,11 @@ public class AccountController {
     public ResponseEntity<List<Loan>> getLoans() {
 	    return ResponseEntity.ok(loanService.findAllLoans());
     }
+
+    @GetMapping(value = "account/loans")
+    public ResponseEntity<List<Loan>> getAccountLoans(@RequestParam Long personalNumber) {
+	    return ResponseEntity.ok(loanService.findAllAccountLoans(personalNumber));
+    }
+
 
 }

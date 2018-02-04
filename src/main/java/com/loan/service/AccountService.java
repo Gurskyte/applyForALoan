@@ -15,14 +15,14 @@ public class AccountService {
         this.accountRepository = accountRepository;
     }
 
-    public Account findOrCreate(LoanForm loanForm) {
-        Account account = accountRepository.findFirstByName(loanForm.getName());
+    Account findOrCreate(LoanForm loanForm) {
+        Account account = accountRepository.findOne(loanForm.getPersonalNumber());
         if (account == null) {
-            account = accountRepository.save(new Account(loanForm.getName(), loanForm.getLastName()));
+            account = accountRepository.save(new Account(loanForm.getPersonalNumber(), loanForm.getName(), loanForm.getLastName()));
         }
         return account;
     }
-    public void saveAccount(Account account){
+    void saveAccount(Account account){
         accountRepository.save(account);
     }
 

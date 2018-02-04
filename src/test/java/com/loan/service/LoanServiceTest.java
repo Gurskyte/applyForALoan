@@ -1,19 +1,23 @@
 package com.loan.service;
 
 import com.loan.model.Account;
-import com.loan.model.LoanForm;
+import com.loan.model.Loan;
+import com.loan.model.ResourceNotFoundException;
 import com.loan.model.WebUtils;
 import com.loan.repository.AccountRepository;
 import com.loan.repository.LoanRepository;
+import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import java.util.List;
+
+import static com.loan.TestConstants.*;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -29,21 +33,52 @@ public class LoanServiceTest {
     @Mock
     private LoanRepository loanRepository;
 
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+
     @Before
     public void setUp() {
         loanService = new LoanService(accountRepository, accountService, webUtils, loanRepository);
     }
 
     @Test
-    public void givenKazkas_whenKazkas_thenKazkas() throws Exception {
+    public void givenAccWithLoan_whenTryingToFindAccLoansByPersonalNumber_thenLoanShouldBeFound() {
         //given
-        LoanForm loanForm = new LoanForm();
-        when(accountService.findOrCreate(any(LoanForm.class))).thenReturn(new Account());
+        Account expectedAccount = new Account(PERSONAL_NUMBER, NAME, LAST_NAME);
+        Loan expectedLoan = new Loan(LOAN_AMOUNT, SIX_MONTHS, CLIENT_IP);
+        expectedAccount.addLoan(expectedLoan);
+        when(accountRepository.findOne(PERSONAL_NUMBER)).thenReturn(expectedAccount);
 
         //when
-        loanService.issue(loanForm);
+        List<Loan> actualLoans = loanService.findAllAccountLoans(PERSONAL_NUMBER);
 
         //then
-        verify(loanService, times(2));
+        Assert.assertEquals(expectedLoan, actualLoans.get(0));
+    }
+
+    @Test(expected = ResourceNotFoundException.class)
+    public void givenNullAcc_whenTryingToFindAccLoansByPersonalNumber_thenExceptionIsThrown() {
+        //given
+        when(accountRepository.findOne(PERSONAL_NUMBER)).thenReturn(null);
+
+        //when
+        List<Loan> actualLoans = loanService.findAllAccountLoans(PERSONAL_NUMBER);
+
+        //then
+    }
+
+    @Test
+    public void givenNullAcc_whenTryingToFindAccLoansByPersonalNumber_thenExceptionIsThrown2() {
+        //given
+        when(accountRepository.findOne(PERSONAL_NUMBER)).thenReturn(null);
+
+        //then
+        thrown.expect(ResourceNotFoundException.class);
+        thrown.expectMessage("There's no account with provided personal number.");
+
+        //when
+        List<Loan> actualLoans = loanService.findAllAccountLoans(PERSONAL_NUMBER);
+
     }
 }

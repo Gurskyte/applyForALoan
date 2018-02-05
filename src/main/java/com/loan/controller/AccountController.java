@@ -28,7 +28,7 @@ public class AccountController {
 		return "Success";
 	}
 
-	@GetMapping(value="account")
+	/*@GetMapping(value="account")
     @ResponseStatus(HttpStatus.OK)
 	public Account getAccount(@RequestParam String name) {
 		return loanService.findAccount(name);
@@ -37,7 +37,7 @@ public class AccountController {
 	@GetMapping(value = "loans")
     public ResponseEntity<List<Loan>> getLoans() {
 	    return ResponseEntity.ok(loanService.findAllLoans());
-    }
+    }*/
 
     @GetMapping(value = "account/loans")
     public ResponseEntity<List<Loan>> getAccountLoans(@RequestParam Long personalNumber) {

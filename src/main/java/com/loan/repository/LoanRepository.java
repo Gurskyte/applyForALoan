@@ -10,6 +10,6 @@ import java.time.LocalDateTime;
 
 @Repository
 public interface LoanRepository extends JpaRepository<Loan, Long> {
-  @Query("SELECT COUNT(l) FROM Loan l WHERE l.ip=:ip AND l.issueDate >= :issueDate")
-  int countByIpBeforeDate(@Param("ip") String ip, @Param("issueDate") LocalDateTime issueDate);
+  @Query("SELECT COUNT(l) FROM Loan l WHERE l.ip=:ip AND l.issueDate >= :date")
+  int countLoansByIpAfterDate(@Param("ip") String ip, @Param("date") LocalDateTime date);
 }

@@ -38,7 +38,7 @@ public class LoanService{
     private boolean isValid(){
         LocalDateTime nowMinusDay = LocalDateTime.now().minusSeconds(5);
         String clientIp = webUtils.getClientIp();
-        int loanCount = loanRepository.countByIpBeforeDate(clientIp, nowMinusDay);
+        int loanCount = loanRepository.countLoansByIpAfterDate(clientIp, nowMinusDay);
         if(loanCount < 3 && isLoanTimeValid()) {
             return true;
         }
@@ -55,13 +55,13 @@ public class LoanService{
         return false;
     }
 
-    public Account findAccount(String name) {
+  /*  public Account findAccount(String name) {
         return accountRepository.findFirstByName(name);
     }
 
     public List<Loan> findAllLoans() {
         return loanRepository.findAll();
-    }
+    }*/
 
 
     public List<Loan> findAllAccountLoans(Long personalNumber) {

@@ -15,6 +15,7 @@ public class AccountService {
         this.accountRepository = accountRepository;
     }
 
+
     Account findOrCreate(LoanForm loanForm) {
         Account account = accountRepository.findOne(loanForm.getPersonalNumber());
         if (account == null) {

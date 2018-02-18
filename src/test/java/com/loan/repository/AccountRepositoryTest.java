@@ -1,3 +1,7 @@
+/*
+Nereikalingas, nes AccRepos klasėje nėra jokių metodų.
+
+
 package com.loan.repository;
 
 import com.loan.model.Account;
@@ -41,4 +45,4 @@ public class AccountRepositoryTest {
     }
 
 
-}
+}*/

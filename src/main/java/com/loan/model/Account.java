@@ -14,13 +14,14 @@ public class Account {
     @Column(name = "personal_number")
     private Long personalNumber;
 
+    @Column(name = "name")
     private String name;
 
-    @Column(name = "account_name")
+    @Column(name = "last_name")
     private String lastName;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "personal_number", referencedColumnName = "personal_number")
+    @JoinColumn(name = "acc_personal_number", referencedColumnName = "personal_number")
     private List<Loan> loans = new ArrayList<>();
 
     public Account() {

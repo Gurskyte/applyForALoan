@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 public class Loan {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "loan_id")
+    @Column(name = "id")
     private Long id;
     @Column(name = "loan_amount")
     private BigDecimal loanAmount;
@@ -18,6 +18,7 @@ public class Loan {
     private int months;
     @Column(name = "ip")
     private String ip;
+    @Column(name = "issue_date")
     LocalDateTime issueDate;
 
     public Loan() {
